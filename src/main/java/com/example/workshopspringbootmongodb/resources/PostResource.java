@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -55,6 +56,17 @@ public class PostResource {
     public ResponseEntity<List<Post>> findPostsByTitleContainingIgnoreCase(@RequestParam(value = "text", defaultValue = "") String text) {
         text = URL.decodeParam(text);
         List<Post> posts = service.findPostsByTitleContaining(text);
+        return ResponseEntity.ok().body(posts);
+    }
+
+    @RequestMapping(value = "/textanddatesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPostsByTextAndDate(@RequestParam(value = "text", defaultValue = "") String text,
+                                                             @RequestParam(value = "initalDate", defaultValue = "") String initalDate,
+                                                             @RequestParam(value = "finalDate", defaultValue = "") String finalDate) {
+        text = URL.decodeParam(text);
+        Date iDate = URL.convertDate(initalDate, new Date(0L));
+        Date fDate = URL.convertDate(finalDate, new Date());
+        List<Post> posts = service.findPostsByTextAndDate(text, iDate, fDate);
         return ResponseEntity.ok().body(posts);
     }
 

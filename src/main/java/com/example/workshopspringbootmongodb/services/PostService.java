@@ -6,6 +6,7 @@ import com.example.workshopspringbootmongodb.services.exception.ObjectNotFoundEx
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +47,11 @@ public class PostService {
     public List<Post> findPostsByTitleContaining(String title) {
         //return repository.findPostsByTitleContainingIgnoreCase(title);
         return repository.findPostsByTitle(title);
+    }
+
+    public List<Post> findPostsByTextAndDate(String text, Date initalDate, Date finalDate){
+        finalDate = new Date(finalDate.getTime() + 24 * 60 * 60 * 1000);
+        return repository.findPostsByTextAndDate(text, initalDate, finalDate);
     }
 
 //    public Post fromDTO(PostDTO PostDTO){
