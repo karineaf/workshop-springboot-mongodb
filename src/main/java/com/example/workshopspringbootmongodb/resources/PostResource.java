@@ -1,6 +1,7 @@
 package com.example.workshopspringbootmongodb.resources;
 
 import com.example.workshopspringbootmongodb.domain.Post;
+import com.example.workshopspringbootmongodb.resources.util.URL;
 import com.example.workshopspringbootmongodb.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,12 @@ public class PostResource {
 //        newPost = service.update(post);
 //        return ResponseEntity.ok().body(newPost);
 //    }
+
+    @RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPostsByTitleContaining(@RequestParam(value = "text", defaultValue = "") String text) {
+        text = URL.decodeParam(text);
+        List<Post> posts = service.findPostsByTitleContaining(text);
+        return ResponseEntity.ok().body(posts);
+    }
 
 }

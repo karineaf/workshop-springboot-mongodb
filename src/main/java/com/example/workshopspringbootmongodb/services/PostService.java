@@ -43,7 +43,12 @@ public class PostService {
         newPost.setBody(post.getBody());
     }
 
+    public List<Post> findPostsByTitleContaining(String title) {
+        return repository.findPostsByTitleContaining(title);
+    }
+
 //    public Post fromDTO(PostDTO PostDTO){
 //        return new Post(PostDTO.getId(), PostDTO.getName(), PostDTO.getEmail());
 //    }
+
 }
