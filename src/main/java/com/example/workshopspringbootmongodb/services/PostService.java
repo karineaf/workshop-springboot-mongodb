@@ -44,7 +44,8 @@ public class PostService {
     }
 
     public List<Post> findPostsByTitleContaining(String title) {
-        return repository.findPostsByTitleContainingIgnoreCase(title);
+        //return repository.findPostsByTitleContainingIgnoreCase(title);
+        return repository.findPostsByTitle(title);
     }
 
 //    public Post fromDTO(PostDTO PostDTO){
