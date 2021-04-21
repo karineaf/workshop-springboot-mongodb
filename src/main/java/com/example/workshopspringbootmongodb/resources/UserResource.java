@@ -2,6 +2,7 @@ package com.example.workshopspringbootmongodb.resources;
 
 import com.example.workshopspringbootmongodb.domain.Post;
 import com.example.workshopspringbootmongodb.domain.User;
+import com.example.workshopspringbootmongodb.dto.PostDTO;
 import com.example.workshopspringbootmongodb.dto.UserDTO;
 import com.example.workshopspringbootmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,10 +59,10 @@ public class UserResource {
     }
 
     @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> findPostsByUserId(@PathVariable String id) {
+    public ResponseEntity<List<PostDTO>> findPostsByUserId(@PathVariable String id) {
         User user = service.findById(id);
-
-        return ResponseEntity.ok().body(user.getPosts());
+        List<PostDTO> postsDTO = user.getPosts().stream().map(PostDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(postsDTO);
     }
 
 }

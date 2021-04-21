@@ -1,6 +1,9 @@
 package com.example.workshopspringbootmongodb.services;
 
 import com.example.workshopspringbootmongodb.domain.Post;
+import com.example.workshopspringbootmongodb.domain.User;
+import com.example.workshopspringbootmongodb.dto.AuthorDTO;
+import com.example.workshopspringbootmongodb.dto.PostDTO;
 import com.example.workshopspringbootmongodb.repository.PostRepository;
 import com.example.workshopspringbootmongodb.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,9 @@ public class PostService {
 
     @Autowired
     private PostRepository repository;
+
+    @Autowired
+    private UserService userService;
 
     public List<Post> findAll(){
         return repository.findAll();
@@ -40,7 +46,7 @@ public class PostService {
     }
 
     private void updateData(Post newPost, Post post) {
-        newPost.setBody(post.getTitle());
+        newPost.setTitle(post.getTitle());
         newPost.setBody(post.getBody());
     }
 
@@ -54,8 +60,8 @@ public class PostService {
         return repository.findPostsByTextAndDate(text, initalDate, finalDate);
     }
 
-//    public Post fromDTO(PostDTO PostDTO){
-//        return new Post(PostDTO.getId(), PostDTO.getName(), PostDTO.getEmail());
-//    }
+    public Post fromDTO(PostDTO postDTO){
+        return new Post(postDTO.getId(), postDTO.getDate(), postDTO.getTitle(), postDTO.getBody(), postDTO.getAuthorDTO());
+    }
 
 }

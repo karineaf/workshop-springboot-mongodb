@@ -14,7 +14,7 @@ public class ResourceExceptionHandler {
     private static final String NAO_ENCONTRADO = "Não encontrado";
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError se = new StandardError(System.currentTimeMillis(), status.value(), NAO_ENCONTRADO, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(se);
